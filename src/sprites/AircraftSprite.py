@@ -23,5 +23,5 @@ class AircraftSprite(pygame.sprite.Sprite):
         """Populates text for sprite"""
         font = pygame.font.SysFont('helvetica', 20)
         anti_aliasing = True
-        first_line = self.aircraft.name + ' - ' + self.aircraft.get_pretty_altitude()
+        first_line = f"{self.aircraft.name} ({self.aircraft.category}) - {self.aircraft.hex} - {self.aircraft.get_pretty_altitude()}"
         self.text_surface = font.render(first_line, anti_aliasing, (255, 255, 255))

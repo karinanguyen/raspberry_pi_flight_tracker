@@ -1,7 +1,26 @@
 from sprites.AircraftSprite import AircraftSprite
 import helpers
 
-
+def category_to_description(category_code):
+    if category_code == "A1":
+        return "Light <7030 kg"
+    elif category_code == "A2":
+        return "Small <34000 kg"
+    elif category_code == "A3":
+        return "Large <130000 kg"
+    elif category_code == "A4":
+        return "Boeing 757"
+    elif category_code == "A5":
+        return "Heavy >=130000 kg"
+    elif category_code == "A6":
+        return "Highly Maneuverable (prob. fighter jet)"
+    elif category_code == "A7":
+        return "Rotorcraft (Helicopter)"
+    elif category_code == "A8":
+        return "Glide/Sailplane"
+    else: 
+        return "Unknown" 
+	 
 class Aircraft():
     """Class for representing an aircraft on-screen"""
 
@@ -23,6 +42,8 @@ class Aircraft():
         self.alt = None
         self.track = None
         self.should_draw = True
+        self.category = "Unknown"
+        self.hex = " "
 
         name_retrieved = aircraft_dict.get('flight')
         lat_retrieved = aircraft_dict.get('lat')
@@ -30,6 +51,8 @@ class Aircraft():
         squawk_retrieved = aircraft_dict.get('squawk')
         alt_retrieved = aircraft_dict.get('alt_geom')
         track_retrieved = aircraft_dict.get('track')
+        hex_retrieved = aircraft_dict.get('hex')
+        category_retrieved = aircraft_dict.get('category')
 
         if name_retrieved:
             self.name = name_retrieved.strip()
@@ -56,6 +79,10 @@ class Aircraft():
                 self.track = int(track_retrieved[0])
             else:
                 self.track = int(track_retrieved)
+        if hex_retrieved: 
+            self.hex = hex_retrieved.strip()
+        if category_retrieved:
+            self.category = category_to_description(category_retrieved.strip())
 
     def check_aircraft_bounds(self):
         """Determines if the aircraft is within reporting bounds"""
